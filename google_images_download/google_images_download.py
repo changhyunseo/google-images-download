@@ -94,10 +94,13 @@ def user_input():
                                      'gray', 'black', 'brown'])
         parser.add_argument('-ct', '--color_type', help='filter on color', type=str, required=False,
                             choices=['full-color', 'black-and-white', 'transparent'])
+        # parser.add_argument('-r', '--usage_rights', help='usage rights', type=str, required=False,
+        #                     choices=['labeled-for-reuse-with-modifications', 'labeled-for-reuse',
+        #                              'labeled-for-noncommercial-reuse-with-modification',
+        #                              'labeled-for-nocommercial-reuse'])
         parser.add_argument('-r', '--usage_rights', help='usage rights', type=str, required=False,
-                            choices=['labeled-for-reuse-with-modifications', 'labeled-for-reuse',
-                                     'labeled-for-noncommercial-reuse-with-modification',
-                                     'labeled-for-nocommercial-reuse'])
+                            choices=['creative-commons-licenses',
+                                     'commercial-and-other-licenses'])
         parser.add_argument('-s', '--size', help='image size', type=str, required=False,
                             choices=['large', 'medium', 'icon', '>400*300', '>640*480', '>800*600', '>1024*768', '>2MP',
                                      '>4MP', '>6MP', '>8MP', '>10MP', '>12MP', '>15MP', '>20MP', '>40MP', '>70MP'])
@@ -516,6 +519,13 @@ class googleimagesdownload:
                                    {'labeled-for-reuse-with-modifications': 'sur:fmc', 'labeled-for-reuse': 'sur:fc',
                                     'labeled-for-noncommercial-reuse-with-modification': 'sur:fm',
                                     'labeled-for-nocommercial-reuse': 'sur:f'}],
+                #   'usage_rights': [arguments['usage_rights'],
+                #                    {'labeled-for-reuse-with-modifications': 'sur:fmc', 'labeled-for-reuse': 'sur:fc',
+                #                     'labeled-for-noncommercial-reuse-with-modification': 'sur:fm',
+                #                     'labeled-for-nocommercial-reuse': 'sur:f'}],
+                  'usage_rights': [arguments['usage_rights'],
+                                   {'creative-commons-licenses': 'il:cl',
+                                    'commercial-and-other-licenses': 'il:ol'}],
                   'size': [arguments['size'],
                            {'large': 'isz:l', 'medium': 'isz:m', 'icon': 'isz:i', '>400*300': 'isz:lt,islt:qsvga',
                             '>640*480': 'isz:lt,islt:vga', '>800*600': 'isz:lt,islt:svga',
@@ -556,15 +566,15 @@ class googleimagesdownload:
         elif similar_images:
             print(similar_images)
             keywordem = self.similar_images(similar_images)
-            url = 'https://www.google.com/search?q=' + keywordem + '&espv=2&biw=1366&bih=667&site=webhp&source=lnms&tbm=isch&sa=X&ei=XosDVaCXD8TasATItgE&ved=0CAcQ_AUoAg'
+            url = 'https://www.google.com/search?q=' + keywordem + '&gl=us&hl=en' + '&espv=2&biw=1366&bih=667&site=webhp&source=lnms&tbm=isch&sa=X&ei=XosDVaCXD8TasATItgE&ved=0CAcQ_AUoAg'
         elif specific_site:
             url = 'https://www.google.com/search?q=' + quote(
                 search_term.encode(
-                    'utf-8')) + '&as_sitesearch=' + specific_site + '&espv=2&biw=1366&bih=667&site=webhp&source=lnms&tbm=isch' + params + '&sa=X&ei=XosDVaCXD8TasATItgE&ved=0CAcQ_AUoAg'
+                    'utf-8')) + '&as_sitesearch=' + specific_site + '&gl=us&hl=en' + '&espv=2&biw=1366&bih=667&site=webhp&source=lnms&tbm=isch' + params + '&sa=X&ei=XosDVaCXD8TasATItgE&ved=0CAcQ_AUoAg'
         else:
             url = 'https://www.google.com/search?q=' + quote(
                 search_term.encode(
-                    'utf-8')) + '&espv=2&biw=1366&bih=667&site=webhp&source=lnms&tbm=isch' + params + '&sa=X&ei=XosDVaCXD8TasATItgE&ved=0CAcQ_AUoAg'
+                    'utf-8')) + '&gl=us&hl=en' + '&espv=2&biw=1366&bih=667&site=webhp&source=lnms&tbm=isch' + params + '&sa=X&ei=XosDVaCXD8TasATItgE&ved=0CAcQ_AUoAg'
 
         # safe search check
         if safe_search:
